@@ -11,45 +11,60 @@
 		</style>
 	</head>
 	<body>
-		<p>https://www.google.com/maps/dir/Dhaka/23.240169,90.653920/@24.7207999,88.9715678</p>
 		
-		<button id = "find-me">Diraction</button><br/>
+		<h4>Set your Location whare you want to make distance, and automatically get your current lat and long and make your previous set Location palce and your current location place Diraction</h4>
+		<!-- if occur any Erro then show message this p tag  -->
 		<p id = "status"></p>
+		
+		<!-- if success() function call without any problem then show a tag  -->
 		<a id = "map-link" target="_blank"></a>
+		
+		
+		<!-- JAVASCRIPT CODE  -->
 		<script>
 			
-			function geoFindMe() {
+			window.onload=function(){
 				
-				const status = document.querySelector('#status');
-				const mapLink = document.querySelector('#map-link');
-				
-				mapLink.href = '';
-				mapLink.textContent = '';
-				
-				function success(position) {
-					const latitude  = position.coords.latitude;
-					const longitude = position.coords.longitude;
+				function geoFindMe() {
 					
-					status.textContent = '';
-					mapLink.href = `https://www.google.com/maps/dir/Dhaka/${latitude},${longitude}/@24.7207999,88.9715678`
-				 
-					mapLink.textContent = `https://www.google.com/maps/dir/Dhaka/${latitude},${longitude}/@24.7207999,88.9715678`
+					const status = document.querySelector('#status');
+					const mapLink = document.querySelector('#map-link');
+					
+					mapLink.href = '';
+					mapLink.textContent = '';
+					
+					function success(position) {
+						const latitude  = position.coords.latitude;
+						const longitude = position.coords.longitude;
+						
+						status.textContent = '';
+						
+						<!-- Please Read this comment -->
+						
+						<!-- https://www.google.com/maps/dir/Set_Place_Name_Form_this_place_you_want_to_make_distance/Set_your_lat_long_variable_here/@Set_Where_you_set_place_name__This_place_name_lat_long_set_here	 -->
+						
+						
+						mapLink.href = `https://www.google.com/maps/dir/Dhaka/${latitude},${longitude}/@24.7207999,88.9715678`
+						
+						mapLink.textContent = "Dicraction"
+					}
+					
+					function error() {
+						status.textContent = 'Unable to retrieve your location';
+					}
+					
+					if (!navigator.geolocation) {
+						status.textContent = 'Geolocation is not supported by your browser';
+						} else {
+						status.textContent = 'Locating…';
+						navigator.geolocation.getCurrentPosition(success, error);
+					}
+					
 				}
-				
-				function error() {
-					status.textContent = 'Unable to retrieve your location';
-				}
-				
-				if (!navigator.geolocation) {
-					status.textContent = 'Geolocation is not supported by your browser';
-					} else {
-					status.textContent = 'Locating…';
-					navigator.geolocation.getCurrentPosition(success, error);
-				}
+				<!-- when your page reload then automatically call this function -->
+				geoFindMe();
 				
 			}
-			
-			document.querySelector('#find-me').addEventListener('click', geoFindMe);
 			
 			
 		</script>
